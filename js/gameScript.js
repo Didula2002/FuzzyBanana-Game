@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
+    
     const puzzleImage = document.getElementById('puzzle-image');
     const popupOverlay = document.getElementById('popup-overlay');
     const popupBox = document.getElementById('popup-box');
-    const popupMessage = document.getElementById('popup-message'); // Title for popup
-    const correctAnswerElement = document.getElementById('correct-answer'); // Correct answer placeholder
-    const popupBtn = document.getElementById('popup-btn'); // Popup button
+    const popupMessage = document.getElementById('popup-message'); 
+    const correctAnswerElement = document.getElementById('correct-answer'); 
+    const popupBtn = document.getElementById('popup-btn'); 
     const gameContainer = document.querySelector('.game-container');
     const scoreElement = document.getElementById('score');
     const timerElement = document.getElementById('time');
     const buttons = document.querySelectorAll('.answer-btn');
-    const levelElement = document.getElementById('level'); // Level display
-    const muteIcon = document.getElementById('mute-icon'); // Mute/Unmute button
+    const levelElement = document.getElementById('level'); 
+    const muteIcon = document.getElementById('mute-icon'); 
 
-    // Settings and Info Popups
+    
     const settingsIcon = document.getElementById('settings-icon');
     const infoIcon = document.getElementById('info-icon');
     const settingsPopupOverlay = document.getElementById('settings-popup-overlay');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsCloseBtn = document.getElementById('settings-close-btn');
     const infoCloseBtn = document.getElementById('info-close-btn');
 
-    // Game variables
+    
     const proxyUrl = 'proxy.php';
     const updateScoreUrl = 'update_score.php';
 
@@ -32,52 +32,48 @@ document.addEventListener('DOMContentLoaded', () => {
     let puzzlesCompleted = 0;
 
     const level = parseInt(levelElement.textContent);
-    const puzzleLimits = [0, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26]; // Multiply each value by 2
+    const puzzleLimits = [0, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26]; 
 
     const totalPuzzles = puzzleLimits[level];
-    const starThresholds = { 1: 50, 2: 80 }; // Average correctness thresholds for 2 and 3 stars
+    const starThresholds = { 1: 50, 2: 80 }; 
     let correctAnswer = null;
 
     let timer = null;
-    let timeLeft = 30 - (level - 1) * 2; // Timer decreases by 2 seconds for each level
+    let timeLeft = 30 - (level - 1) * 2; 
     let canAnswer = true;
-    let isPaused = false; // Flag to check if the timer is paused
+    let isPaused = false; 
     let isMuted = false;
 
 
-    // Audio
-    const backgroundMusic = new Audio('audio/background_music.mp3'); // Path to your background music
-    backgroundMusic.loop = true; // Enable looping
-    backgroundMusic.play(); // Start playing music when the game loads
+    const backgroundMusic = new Audio('audio/background_music.mp3'); 
+    backgroundMusic.loop = true; 
+    backgroundMusic.play(); 
 
-    // Initialize popups with the same background as login.png
-const initializePopups = () => {
+    const initializePopups = () => {
     const backgroundImage = "url('images/login.png') no-repeat center center";
     const backgroundSize = "cover";
 
-    // Apply to Settings Popup
+
     settingsPopupBox.style.background = backgroundImage;
     settingsPopupBox.style.backgroundSize = backgroundSize;
 
-    // Apply to Info Popup
     infoPopupBox.style.background = backgroundImage;
     infoPopupBox.style.backgroundSize = backgroundSize;
 
-    // Dynamically set button background for settings and info popups
-    const popupButtons = [settingsCloseBtn, infoCloseBtn]; // Include settings and info close buttons
+    const popupButtons = [settingsCloseBtn, infoCloseBtn]; 
     popupButtons.forEach(button => {
-        button.style.backgroundImage = "url('images/button2.png')"; // Set button2.png as background
-        button.style.backgroundSize = "contain"; // Ensure it fits within the button
+        button.style.backgroundImage = "url('images/button2.png')"; 
+        button.style.backgroundSize = "contain"; 
         button.style.backgroundPosition = "center";
         button.style.backgroundRepeat = "no-repeat";
-        button.style.width = "300px"; // Adjust width for visual consistency
-        button.style.height = "150px"; // Adjust height for visual consistency
-        button.style.border = "none"; // Remove any borders
-        button.style.cursor = "pointer"; // Show pointer cursor
-        button.style.outline = "none"; // Remove outline when focused
-        button.style.marginTop = "20px"; // Add spacing between the button and other elements
+        button.style.width = "300px"; 
+        button.style.height = "150px"; 
+        button.style.border = "none"; 
+        button.style.cursor = "pointer"; 
+        button.style.outline = "none"; 
+        button.style.marginTop = "20px"; 
     });
-     // Ensure popups are hidden on load
+     
      settingsPopupOverlay.style.display = "none";
      infoPopupOverlay.style.display = "none";
 };
@@ -86,26 +82,24 @@ const initializePopups = () => {
 muteIcon.addEventListener('click', () => {
     if (isMuted) {
         backgroundMusic.play();
-        muteIcon.src = 'images/mute_icon.png'; // Switch to unmute icon
+        muteIcon.src = 'images/mute_icon.png'; 
     } else {
         backgroundMusic.pause();
-        muteIcon.src = 'images/unmute_icon.png'; // Switch to mute icon
+        muteIcon.src = 'images/unmute_icon.png'; 
     }
-    // Ensure size consistency
+    
     muteIcon.style.width = "90px"; 
     muteIcon.style.height = "90px";
-    isMuted = !isMuted; // Toggle mute state
+    isMuted = !isMuted; 
 });
 
 
-    // Close all popups
     const closeAllPopups = () => {
         popupOverlay.style.display = 'none';
         settingsPopupOverlay.style.display = 'none';
         infoPopupOverlay.style.display = 'none';
     };
 
-    // Pause the timer
     const pauseTimer = () => {
         if (!isPaused) {
             clearInterval(timer);
@@ -113,7 +107,7 @@ muteIcon.addEventListener('click', () => {
         }
     };
 
-    // Resume the timer
+
     const resumeTimer = () => {
         if (isPaused) {
             startTimer();
@@ -121,7 +115,7 @@ muteIcon.addEventListener('click', () => {
         }
     };
     const finishLevel = async () => {
-        // Calculate the average correctness
+        
         const averageCorrectness = (correctAnswers / totalPuzzles) * 100 * 2;
         let stars = 1;
         if (averageCorrectness >= starThresholds[2]) stars = 3;
@@ -132,7 +126,7 @@ muteIcon.addEventListener('click', () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    user_id: currentUserId, // Replace this with the actual user ID
+                    user_id: currentUserId, 
                     level,
                     stars,
                     score,
@@ -144,7 +138,7 @@ muteIcon.addEventListener('click', () => {
     
             if (result.success) {
                 console.log("Data saved successfully. Displaying final popup...");
-                showFinalPopup(stars); // Pass the stars to the final popup
+                showFinalPopup(stars); 
             } else {
                 console.error("Failed to save data:", result.error);
                 alert("An error occurred while saving your progress. Please try again.");
@@ -155,18 +149,17 @@ muteIcon.addEventListener('click', () => {
         }
     };
     
-   // Function to show the final popup
+   
 const showFinalPopup = (stars) => {
-    closeAllPopups(); // Ensure all other popups are closed
+    closeAllPopups(); 
 
-    // Set popup background
+
     popupBox.style.background = "url('images/login.png') no-repeat center center";
     popupBox.style.backgroundSize = "cover";
 
-    // Set the popup header
+
     popupMessage.innerHTML = `<h1 style="font-size: 24px; font-weight: bold; margin-bottom: 90px;">Level Complete!</h1>`;
 
-    // Add the score as a paragraph
     const scoreParagraph = document.createElement('p');
     scoreParagraph.textContent = `Score: ${score}`;
     scoreParagraph.style.fontSize = '20px';
@@ -174,7 +167,7 @@ const showFinalPopup = (stars) => {
     scoreParagraph.style.textAlign = 'center';
     popupMessage.appendChild(scoreParagraph);
 
-    // Add stars dynamically as images
+
     const starsContainer = document.createElement('div');
     starsContainer.style.display = 'flex';
     starsContainer.style.justifyContent = 'center';
@@ -183,9 +176,9 @@ const showFinalPopup = (stars) => {
 
     for (let i = 0; i < stars; i++) {
         const starImage = document.createElement('img');
-        starImage.src = 'images/star.png'; // Path to your star image
+        starImage.src = 'images/star.png'; 
         starImage.alt = 'Star';
-        starImage.style.width = '50px'; // Adjust size as needed
+        starImage.style.width = '50px'; 
         starImage.style.height = '50px';
         starsContainer.appendChild(starImage);
     }
@@ -196,15 +189,14 @@ const showFinalPopup = (stars) => {
 
     for (let i = 0; i < stars; i++) {
         const bunnyImage = document.createElement('img');
-        bunnyImage.src = 'images/rabbit.png'; // Path to your star image
+        bunnyImage.src = 'images/rabbit.png'; 
         bunnyImage.alt = 'Star';
-        bunnyImage.style.width = '100px'; // Adjust size as needed
+        bunnyImage.style.width = '100px'; 
         bunnyImage.style.height = '100px';
         bunnyContainer.appendChild(bunnyImage);
     }
     popupMessage.appendChild(starsContainer);
 
-    // Update the button text and functionality
     popupBtn.textContent = "Home";
     popupBtn.style.backgroundImage = "url('images/button2.png')";
     popupBtn.style.backgroundSize = "contain";
@@ -214,11 +206,11 @@ const showFinalPopup = (stars) => {
     popupBtn.style.height = "150px";
 
     popupBtn.onclick = () => {
-        window.location.href = 'home.php'; // Redirect to home when the button is clicked
+        window.location.href = 'home.php'; 
     };
 
-    popupOverlay.style.display = 'flex'; // Show the popup
-    gameContainer.classList.add('blur'); // Blur the game container
+    popupOverlay.style.display = 'flex'; 
+    gameContainer.classList.add('blur'); 
 };
 
     
@@ -229,7 +221,6 @@ const showFinalPopup = (stars) => {
             closeAllPopups();
             gameContainer.classList.remove('blur');
     
-             // Set the background for the entire website based on the level
         const backgrounds = {
             1: 'images/back1.jpg',
             2: 'images/back2.jpg',
@@ -245,24 +236,24 @@ const showFinalPopup = (stars) => {
 
         if (backgrounds[level]) {
             document.body.style.backgroundImage = `url('${backgrounds[level]}')`;
-            document.body.style.backgroundSize = 'cover'; // Cover the full viewport
+            document.body.style.backgroundSize = 'cover'; 
             document.body.style.backgroundPosition = 'center';
             document.body.style.backgroundRepeat = 'no-repeat';
-            document.body.style.height = '100%'; // Ensure it applies to the full height
-            document.body.style.margin = '0'; // Remove any extra margin
+            document.body.style.height = '100%'; 
+            document.body.style.margin = '0'; 
             document.body.style.padding = '0';
-            document.body.style.overflowX = 'hidden'; // Prevent horizontal scrolling
+            document.body.style.overflowX = 'hidden'; 
         }
             const response = await fetch(`${proxyUrl}?action=fetch`);
             const data = await response.json();
     
             if (data.question && data.solution) {
                 puzzleImage.src = `data:image/png;base64,${data.question}`;
-                correctAnswer = atob(data.solution); // Decode the solution
+                correctAnswer = atob(data.solution); 
                 resetTimer();
                 canAnswer = true;
     
-                attachButtonListeners(); // Ensure buttons are set up correctly
+                attachButtonListeners(); 
             } else {
                 throw new Error('Invalid puzzle data');
             }
@@ -271,7 +262,7 @@ const showFinalPopup = (stars) => {
         }
     };
 
-    // Show popup with background, correct answer, and button image
+
     const showPopup = (message, isCorrect) => {
         closeAllPopups(); // Close other popups before showing this one
 
