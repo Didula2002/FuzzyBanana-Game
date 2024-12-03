@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Global Background Setup
-    //document.body.style.backgroundImage = "url('images/background.jpg')";
+    
     document.body.style.backgroundSize = "cover";
     document.body.style.backgroundPosition = "center";
     document.body.style.backgroundRepeat = "no-repeat";
@@ -9,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.justifyContent = "center";
     document.body.style.alignItems = "center";
 
-    // DOM Elements
     const settingsPopupOverlay = document.getElementById('settings-popup-overlay');
     const infoPopupOverlay = document.getElementById('info-popup-overlay');
     const settingsPopupBox = document.getElementById('settings-popup-box');
@@ -17,10 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsCloseBtn = document.getElementById('settings-close-btn');
     const infoCloseBtn = document.getElementById('info-close-btn');
 
-    
-    
 
-    // Ensure popups have consistent backgrounds
     const initializePopups = () => {
         const backgroundImage = "url('images/login.png') no-repeat center center";
         const backgroundSize = "cover";
@@ -31,35 +26,31 @@ document.addEventListener('DOMContentLoaded', () => {
         infoPopupBox.style.background = backgroundImage;
         infoPopupBox.style.backgroundSize = backgroundSize;
 
-        // Dynamically set button background for settings and info popups
-        const popupButtons = [settingsCloseBtn, infoCloseBtn]; // Include settings and info close buttons
+       
+        const popupButtons = [settingsCloseBtn, infoCloseBtn]; 
         popupButtons.forEach(button => {
-            button.style.backgroundImage = "url('images/button2.png')"; // Set button2.png as background
-            button.style.backgroundSize = "contain"; // Ensure it fits within the button
+            button.style.backgroundImage = "url('images/button2.png')"; 
+            button.style.backgroundSize = "contain"; 
             button.style.backgroundPosition = "center";
             button.style.backgroundRepeat = "no-repeat";
-            button.style.width = "300px"; // Adjust width for visual consistency
-            button.style.height = "150px"; // Adjust height for visual consistency
-            button.style.border = "none"; // Remove any borders
-            button.style.cursor = "pointer"; // Show pointer cursor
-            button.style.outline = "none"; // Remove outline when focused
-            button.style.marginTop = "20px"; // Add spacing between the button and other elements
+            button.style.width = "300px"; 
+            button.style.height = "150px"; 
+            button.style.border = "none"; 
+            button.style.cursor = "pointer"; 
+            button.style.outline = "none"; 
+            button.style.marginTop = "20px"; 
         });
 
-        // Ensure popups are hidden on load
         settingsPopupOverlay.style.display = "none";
         infoPopupOverlay.style.display = "none";
     };
 
     
-
-    // Close all popups
     const closeAllPopups = () => {
         settingsPopupOverlay.style.display = "none";
         infoPopupOverlay.style.display = "none";
     };
 
-    // Add hover effects for buttons
     const addButtonHoverEffects = (buttons) => {
         buttons.forEach((button) => {
             button.addEventListener('mouseenter', () => {
@@ -73,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Event Listeners
+
     const settingsIcon = document.getElementById('settings-icon');
     const infoIcon = document.getElementById('info-icon');
 
@@ -90,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
     settingsCloseBtn.addEventListener('click', closeAllPopups);
     infoCloseBtn.addEventListener('click', closeAllPopups);
 
-    // Initialize Popups and Buttons
     initializePopups();
     addButtonHoverEffects([settingsCloseBtn, infoCloseBtn]);
 });
