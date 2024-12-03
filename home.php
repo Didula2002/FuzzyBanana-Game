@@ -89,10 +89,10 @@ while ($row = mysqli_fetch_assoc($starsResult)) {
       </div>
       <div class="popup-overlay" id="settings-popup-overlay">
     <div class="popup-box" id="settings-popup-box">
-        <!-- Settings Title -->
+       
         <h3 class="settings-title">Settings</h3>
 
-        <!-- PHP Code to Fetch Profile Picture and Name -->
+        
         <?php
         $select = mysqli_query($conn, "SELECT * FROM `user_form` WHERE id = '$user_id'") or die('query failed');
         if (mysqli_num_rows($select) > 0) {
@@ -100,26 +100,25 @@ while ($row = mysqli_fetch_assoc($starsResult)) {
         }
         ?>
 
-        <!-- Display Profile Picture -->
         <?php if ($fetch['image'] == ''): ?>
             <img src="images/default-avatar.png" alt="Profile Picture" class="settings-profile-pic">
         <?php else: ?>
             <img src="uploaded_img/<?php echo $fetch['image']; ?>" alt="Profile Picture" class="settings-profile-pic">
         <?php endif; ?>
 
-        <!-- Display User Name -->
+       
         <h2 class="settings-profile-name"><?php echo $fetch['name']; ?></h2>
         <a href="update_profile.php" class="btn">Update Profile</a>
-        <!-- Logout Button -->
+        
         <a href="home.php?logout=<?php echo $user_id; ?>" class="settings-logout-btn">Logout</a>
 
-        <!-- Close Button -->
+        
         <button class="popup-btn" id="settings-close-btn">Close</button>
     </div>
 </div>
 
 
-<!-- Info Popup -->
+
 <div id="info-popup-overlay" class="popup-overlay">
     <div id="info-popup-box" class="popup-box">
         <h3 class="popup-title">Information</h3>
