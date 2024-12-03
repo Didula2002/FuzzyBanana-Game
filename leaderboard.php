@@ -4,7 +4,6 @@ include 'footer.php';
 
 session_start();
 
-// Fetch leaderboard data from the database
 function getLeaderboardData($conn, $searchName = null) {
     if ($searchName) {
         $query = "
@@ -37,7 +36,6 @@ function getLeaderboardData($conn, $searchName = null) {
     return $leaderboard;
 }
 
-// If this is an API call
 if (isset($_GET['api'])) {
     header('Content-Type: application/json');
     $searchName = isset($_GET['name']) ? $_GET['name'] : null;
@@ -45,7 +43,7 @@ if (isset($_GET['api'])) {
     exit();
 }
 
-// For rendering the HTML
+
 $searchName = isset($_GET['name']) ? $_GET['name'] : null;
 $leaderboard = getLeaderboardData($conn, $searchName);
 ?>
@@ -63,7 +61,7 @@ $leaderboard = getLeaderboardData($conn, $searchName);
     <div class="leaderboard-container">
         <h1 class="leaderboard-title">Leaderboard</h1>
 
-        <!-- Search Bar -->
+
         <div class="search-container">
             <form method="get" action="leaderboard.php">
                 <input type="text" name="name" placeholder="Search by Name" value="<?= htmlspecialchars($searchName) ?>" />
@@ -71,7 +69,7 @@ $leaderboard = getLeaderboardData($conn, $searchName);
             </form>
         </div>
 
-        <!-- Leaderboard Table -->
+
         <table class="leaderboard-table">
             <thead>
                 <tr>
