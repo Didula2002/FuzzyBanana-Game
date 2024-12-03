@@ -264,46 +264,46 @@ const showFinalPopup = (stars) => {
 
 
     const showPopup = (message, isCorrect) => {
-        closeAllPopups(); // Close other popups before showing this one
+        closeAllPopups(); 
 
-        // Set popup background
+       
         popupBox.style.background = "url('images/login.png') no-repeat center center";
-        popupBox.style.backgroundSize = "cover"; // Ensure background fills the popup
+        popupBox.style.backgroundSize = "cover"; 
 
-        // Set the popup message content
+       
         popupMessage.textContent = message;
 
-        // Update the correct answer text
+        
         correctAnswerElement.textContent = `Correct Answer: ${correctAnswer}`;
         if (isCorrect) correctAnswers++;
         puzzlesCompleted++;
-        // Change button background image dynamically
+       
         if (isCorrect) {
-            popupBtn.style.backgroundImage = "url('images/button2.png')"; // Path to correct button image
+            popupBtn.style.backgroundImage = "url('images/button2.png')"; 
         } else {
-            popupBtn.style.backgroundImage = "url('images/button2.png')"; // Path to incorrect button image
+            popupBtn.style.backgroundImage = "url('images/button2.png')"; 
         }
 
-        // Set button styles for proper image alignment and size
-        popupBtn.style.backgroundSize = "contain"; // Ensure image fits within the button
+        
+        popupBtn.style.backgroundSize = "contain"; 
         popupBtn.style.backgroundPosition = "center";
         popupBtn.style.backgroundRepeat = "no-repeat";
-        popupBtn.style.width = "300px"; // Button width
-        popupBtn.style.height = "150px"; // Button height
+        popupBtn.style.width = "300px"; 
+        popupBtn.style.height = "150px"; 
 
-        popupOverlay.style.display = 'flex'; // Show the popup
-        gameContainer.classList.add('blur'); // Blur the game container
+        popupOverlay.style.display = 'flex'; 
+        gameContainer.classList.add('blur'); 
     };
 
-    // Close popup and proceed to the next level
+    
     const closePopup = () => {
-        popupOverlay.style.display = 'none'; // Hide the popup
-        gameContainer.classList.remove('blur'); // Remove blur effect
+        popupOverlay.style.display = 'none'; 
+        gameContainer.classList.remove('blur'); 
         
-        loadPuzzle(); // Load the next puzzle
+        loadPuzzle(); 
     };
 
-   // Check answer function with debugging
+   
 const checkAnswer = (answer) => {
     console.log('checkAnswer called');
     if (!canAnswer) {
@@ -325,22 +325,22 @@ const checkAnswer = (answer) => {
 
     console.log(`Level: ${level}, Total Puzzles: ${totalPuzzles}, Puzzles Completed: ${puzzlesCompleted}`);
 
-    // Check if the level is completed
+    
     if (puzzlesCompleted >= totalPuzzles) {
         popupBtn.addEventListener('click', () => {
             closeAllPopups();
             finishLevel();
-        }, { once: true }); // Add listener to close popup and finish level
+        }, { once: true }); 
     } else {
         popupBtn.addEventListener('click', () => {
             closeAllPopups();
             loadPuzzle();
-        }, { once: true }); // Add listener to close popup and load next puzzle
+        }, { once: true }); 
     }
 };
 const attachButtonListeners = () => {
     buttons.forEach(button => {
-        button.replaceWith(button.cloneNode(true)); // Clear existing listeners
+        button.replaceWith(button.cloneNode(true)); 
     });
 
     const newButtons = document.querySelectorAll('.answer-btn');
@@ -352,7 +352,7 @@ const attachButtonListeners = () => {
     });
 };
 
-    // Timer functions
+  
     const startTimer = () => {
         timer = setInterval(() => {
             if (timeLeft > 0) {
@@ -360,7 +360,7 @@ const attachButtonListeners = () => {
                 timerElement.textContent = timeLeft;
             } else {
                 clearInterval(timer);
-                showPopup('Time is Up!', false); // Show "Time is Up!" popup
+                showPopup('Time is Up!', false); 
                 canAnswer = false;
                 if (puzzlesCompleted >= totalPuzzles) {
                     finishLevel();
@@ -376,48 +376,48 @@ const attachButtonListeners = () => {
         startTimer();
     };
 
-    // Open settings popup
+   
     settingsIcon.addEventListener('click', () => {
-        closeAllPopups(); // Close other popups
-        pauseTimer(); // Pause the timer
+        closeAllPopups(); 
+        pauseTimer(); 
         settingsPopupOverlay.style.display = 'flex';
     });
 
-    // Close settings popup
+    
     settingsCloseBtn.addEventListener('click', () => {
         settingsPopupOverlay.style.display = 'none';
-        resumeTimer(); // Resume the timer
+        resumeTimer();
     });
 
-    // Open info popup
+   
     infoIcon.addEventListener('click', () => {
-        closeAllPopups(); // Close other popups
-        pauseTimer(); // Pause the timer
-        infoPopupOverlay.style.display = 'flex'; // Show info popup
+        closeAllPopups(); 
+        pauseTimer(); 
+        infoPopupOverlay.style.display = 'flex'; 
     });
 
-    // Close info popup
+    
     infoCloseBtn.addEventListener('click', () => {
-        infoPopupOverlay.style.display = 'none'; // Hide info popup
-        resumeTimer(); // Resume the timer
+        infoPopupOverlay.style.display = 'none'; 
+        resumeTimer();
     });
 
-    // Close popups when clicking outside the popup box
+   
     settingsPopupOverlay.addEventListener('click', (e) => {
         if (e.target === settingsPopupOverlay) {
             settingsPopupOverlay.style.display = 'none';
-            resumeTimer(); // Resume the timer
+            resumeTimer(); 
         }
     });
 
     infoPopupOverlay.addEventListener('click', (e) => {
         if (e.target === infoPopupOverlay) {
             infoPopupOverlay.style.display = 'none';
-            resumeTimer(); // Resume the timer
+            resumeTimer(); 
         }
     });
 
-    // Event listeners for answer buttons
+    
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const answer = button.getAttribute('data-value');
@@ -425,10 +425,9 @@ const attachButtonListeners = () => {
         });
     });
 
-    // Event listener for popup button
+   
     popupBtn.addEventListener('click', closePopup);
 
-    // Initialize and load the game
     initializePopups();
     loadPuzzle();
 });
