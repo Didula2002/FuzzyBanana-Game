@@ -29,8 +29,6 @@ if(isset($_POST['submit'])){
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>login</title>
-
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
    <script src="js/script.js" defer></script>
 
@@ -42,18 +40,18 @@ if(isset($_POST['submit'])){
 <form action="" method="post" enctype="multipart/form-data">
    <h3>Login</h3>
 
-   <!-- Username Field -->
+   
    <label for="username">Username:</label>
    <input type="email" name="email" id="username" placeholder="Enter Username" class="box" required>
    
-   <!-- Password Field -->
+   
    <label for="password">Password:</label>
    <input type="password" name="password" id="password" placeholder="Enter Password" class="box" required>
    
   
    
    <p>Already have an account? <a href="register.php">Sign In</a></p>
-    <!-- Submit Button -->
+    
     <input type="submit" name="submit" value="Submit" class="btn">
 </form>
 

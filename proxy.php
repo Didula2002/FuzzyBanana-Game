@@ -1,5 +1,4 @@
 <?php
-// Display errors for debugging (remove in production)
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -14,9 +13,8 @@ if ($_GET['action'] === 'fetch') {
     if ($response !== false) {
         $data = json_decode($response, true);
 
-        // Include the solution (for local validation)
         if (isset($data['solution'])) {
-            $data['solution'] = base64_encode($data['solution']); // Obfuscate the solution
+            $data['solution'] = base64_encode($data['solution']); 
         }
 
         header('Content-Type: application/json');
