@@ -10,7 +10,7 @@ if (!isset($user_id)) {
 }
 
 if (isset($_POST['update_profile'])) {
-    // Fetch the data from the form
+    
     $update_name = mysqli_real_escape_string($conn, $_POST['update_name']);
     $update_email = mysqli_real_escape_string($conn, $_POST['update_email']);
 
