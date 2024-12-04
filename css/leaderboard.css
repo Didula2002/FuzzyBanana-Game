@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Chango&display=swap');
 :root {
-    --input-bg: #d9ae9b;  /* Color for the textboxes */
-    --text-color: #fefbf9;  /* Updated white text color */
-    --label-color: #fefbf9;  /* Updated color for labels */
-    --label-stroke: #5e2f15;  /* Stroke color for labels */
-    --border-color: #b48b79;  /* Border color for input boxes */
+    --input-bg: #d9ae9b;  
+    --text-color: #fefbf9;  
+    --label-color: #fefbf9;  
+    --label-stroke: #5e2f15;  
+    --border-color: #b48b79;  
  }
  
  * {
-    font-family: 'Chango', sans-serif;  /* Apply Chango font to everything */
+    font-family: 'Chango', sans-serif;  
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -43,7 +43,7 @@ body {
     font-size: 2rem;
     margin-bottom: 20px;
     color: #ffffff;
-    margin-bottom: 160px;
+    margin-bottom: 190px;
 }
 
 .search-container {
@@ -78,6 +78,7 @@ body {
     border-collapse: collapse;
     margin: 0 auto;
     text-align: left;
+    margin-bottom: -170px;
 }
 
 .leaderboard-table th,
